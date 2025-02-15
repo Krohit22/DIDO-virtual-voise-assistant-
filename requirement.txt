@@ -9,7 +9,6 @@ soundfile
 SpeechRecognition
 SpeechRecognition[whisper-local]
 plyer
-webbrowser
 wikipedia
 pyautogui
 pyttsx3
