@@ -1,3 +1,5 @@
+from flask import Flask, Request, jsonify
+
 import pyttsx3
 import speech_recognition as sr
 from play_random_song import play_song
@@ -6,10 +8,13 @@ import pyautogui
 import wikipedia
 import webbrowser
 
+app = Flask(__name__)
+
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')     #getting details of current voice
 engine.setProperty('rate', 116)     #setting up new voice rate
 engine.setProperty('voice', voices[2].id)   #changing index, changes voices. 0 for
+
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
@@ -45,14 +50,14 @@ def main_process():
             task = task.strip()
             if task != "":
                 speak("adding task: " + task)
-                with open("tasks.txt", "a") as file:
+                with open("./tasks.txt", "a") as file:
                     file.write(task + "\n")
-        elif 'speak my task' in request:
+        elif 'speak my tas' in request:
             speak("your tasks are")
-            with open("tasks.txt", "r") as file:
+            with open("./tasks.txt", "r") as file:
                 speak("work we have to do today is : "+file.read())
         elif 'show my task' in request: 
-             with open("tasks.txt", "r") as file:
+             with open("./tasks.txt", "r") as file:
                  task = file.read()
              notification.notify(
                  title = "Task Reminder",

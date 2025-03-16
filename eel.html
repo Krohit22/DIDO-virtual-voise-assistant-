@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button onclick="processCommand()">Process Voice Command</button>
+        <div id="output"></div>
+    </div>
+
+    <script type="text/javascript" src="/eel.js"></script>
+    <script>
+        async function processCommand() {
+            const output = document.getElementById("output");
+            output.textContent = "Listening...";
+            
+            try {
+                const response = await eel.process_command()();
+                output.textContent = response;
+            } catch (error) {
+                output.textContent = "Error processing command: " + error;
+            }
+        }
+    </script>
+</body>
+</html>

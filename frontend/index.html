@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Flask API</title>
+</head>
+<body>
+    <h1>Flask API Tester</h1>
+    <button id="fetchButton">Fetch API Response</button>
+
+    <script>
+        // Function to fetch data from the Flask API
+        async function fetchData() {
+            try {
+                // Make a POST request to the Flask API
+                const response = await fetch('http://127.0.0.1:5000/main_process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ })
+
+                });
+
+                // Check if the response is OK
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Parse the JSON response
+                const data = await response.json();
+
+                // Log the response to the console
+                console.log('API Response:', data);
+            } catch (error) {
+                // Log any errors
+                console.error('Error fetching data:', error);
+
+                // Display the error on the page
+                document.body.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Add event listener to the button
+        document.getElementById('fetchButton').addEventListener('click', fetchData);
+    </script>
+</body>
+</html>

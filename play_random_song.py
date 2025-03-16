@@ -1,4 +1,4 @@
 import webbrowser
 
 def play_song():
-    webbrowser.open('https://www.youtube.com/watch?v=5qap5aO4i9A')
+    webbrowser.open('https://youtu.be/Gcne5Wt-Qfo?si=WkAh9VAeKHygaUY_')
