@@ -44,12 +44,12 @@ def speak(text):
 def listen_for_wake_word():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Listening for wake word 'kiko'...")
+        print("Listening for wake word 'Dido'...")
         while True:
             audio = r.listen(source)
             try:
                 content = r.recognize_google(audio, language='en-in').lower()
-                if 'kiko' in content:
+                if 'dido' in content:
                     print("Wake word detected!")
                     speak("Yes? How can I help you?")
                     return True
