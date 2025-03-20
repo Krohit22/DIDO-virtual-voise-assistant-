@@ -11,6 +11,7 @@ import os
 import subprocess
 from genai import GenoAI
 import threading
+import psutil
 
 app = Flask(__name__)
 CORS(app)
@@ -78,7 +79,7 @@ def command():
 
 def main_process():
     while True:
-        if listen_for_wake_word():
+       
             request = command()
             if not request:
                 speak("Sorry, I didn't understand that. Can you please repeat?")
@@ -113,11 +114,46 @@ def main_process():
             elif 'open' in request:
                 query = request.replace("open", "").strip()
                 print(f"Opening application: {query}")
+                pyautogui.press('esc')
                 pyautogui.press('super')
                 pyautogui.typewrite(query)
                 pyautogui.sleep(2)
                 pyautogui.press('enter')
                 speak(f"Opening {query}")
+            elif 'close this application' in request or 'quit' in request:
+                query = request.replace("close", "").replace("quit", "").strip()
+                print(f"Closing application: {query}")
+                pyautogui.hotkey('alt', 'f4')
+                speak(f"Closing {query}")
+            elif 'close tab' in request or 'close this tab' in request or 'close the tab' in request:
+                pyautogui.hotkey('ctrl', 'w')
+                speak("Closing tab")
+            elif 'close' in request:
+                query = request.replace("close", "").strip()  # Clean up the query
+                print(f"Attempting to close: {query}")
+                speak(f"Closing {query}")
+                process_found = False
+                # Search for processes by name
+                for proc in psutil.process_iter(['pid', 'name']):
+                    if query in proc.info['name'].lower():
+                        print(f"Closing process: {proc.info['name']}")
+                        try:
+                            proc.kill()  # Kill the process
+
+                        except psutil.NoSuchProcess:
+                            speak(f"Process {query} not found.")
+                            process_found = False
+                        except psutil.AccessDenied:
+                            speak(f"Permission denied to close {query}.")
+                            process_found = False
+
+                # Only speak this if no process was found at all
+                if not process_found:
+                    speak(f"Could not find an application named {query}")
+
+                # Only speak this if no process was found at all
+                if not process_found:
+                    speak(f"Could not find an application named {query}")
             elif 'wikipedia' in request:
                 speak('Searching Wikipedia...')
                 query = request.replace("wikipedia", "").strip()
