@@ -12,3 +12,13 @@ plyer
 wikipedia
 pyautogui
 pyttsx3
+install mpg123 using choco
+flask
+flask_core
+psutil
+whisper
+pygame
+wave
+TTS
+geocoder
+signal

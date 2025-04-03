@@ -6,26 +6,19 @@ from plyer import notification
 import pyautogui
 import wikipedia
 import webbrowser
-from gtts import gTTS
+from Speak_func import speak, Speech_Output
 import os
-import subprocess
+from WeatherReport import get_weather
 from genai import GenoAI
 import threading
 import psutil
+from detect_Keywords_commands import detect_command
+from keywords import get_keywords_Dic
+import signal
+
 
 app = Flask(__name__)
 CORS(app)
-
-class SpeechOutput:
-    """Class to store the spoken message"""
-    def __init__(self):
-        self.messages = []
-
-    def add_message(self, message):
-        """Add a message to the stored list"""
-        self.messages.insert(0, message)
-
-Speech_Output = SpeechOutput()
 
 @app.route('/')
 def index():
@@ -35,12 +28,7 @@ def index():
 def get_messages():
     return jsonify({'messages': Speech_Output.messages})
 
-def speak(text):
-    Speech_Output.add_message(text)
-    tts = gTTS(text=text, lang='en')
-    tts.save("output.mp3")
-    process = subprocess.Popen(["mpg123", "output.mp3"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)  # Use DEVNULL to hide output.
-    process.wait()  # Wait for mpg123 to finish
+  # Wait for mpg123 to finish
 
 def listen_for_wake_word():
     r = sr.Recognizer()
@@ -79,10 +67,17 @@ def command():
 
 def main_process():
     while True:
-       
+        # if listen_for_wake_word():
+            keywords_Dic = get_keywords_Dic()
             request = command()
-            if not request:
-                speak("Sorry, I didn't understand that. Can you please repeat?")
+            detect_command(request)
+            detected_command = detect_command(request)
+            print("keywords_Dic:", keywords_Dic)  # Debugging statement
+            print("Type of keywords_Dic:", type(keywords_Dic))
+
+            if request is None: 
+                print("No valid command detected, skipping...")
+                continue 
             elif 'play song' in request:
                 speak("Playing song")
                 play_song()
@@ -128,32 +123,39 @@ def main_process():
             elif 'close tab' in request or 'close this tab' in request or 'close the tab' in request:
                 pyautogui.hotkey('ctrl', 'w')
                 speak("Closing tab")
-            elif 'close' in request:
-                query = request.replace("close", "").strip()  # Clean up the query
-                print(f"Attempting to close: {query}")
-                speak(f"Closing {query}")
-                process_found = False
-                # Search for processes by name
-                for proc in psutil.process_iter(['pid', 'name']):
-                    if query in proc.info['name'].lower():
-                        print(f"Closing process: {proc.info['name']}")
+            elif 'close application' in request or 'close' in request:
+                    query = request.replace("close application", "").replace("close", "").strip()
+                    query = query.lower().strip()
+                    print(f"Attempting to close: {query}")
+                    process_found = False
+
+                    for proc in psutil.process_iter(['pid', 'name']):
                         try:
-                            proc.kill()  # Kill the process
+                            process_name = proc.info['name'].lower()
+                            if query in process_name:  # Match process name
+                                print(f"Closing process: {process_name} (PID: {proc.pid})")
+                                
+                                # First, try terminating gracefully
+                                proc.terminate()
+                                proc.wait(timeout=3)
 
+                                # If still running, force kill
+                                if proc.is_running():
+                                    os.kill(proc.pid, signal.SIGTERM)  # Force close
+                                    proc.kill()
+                                
+                                process_found = True  
+                                
                         except psutil.NoSuchProcess:
-                            speak(f"Process {query} not found.")
-                            process_found = False
+                            continue  # If process disappears, move on
                         except psutil.AccessDenied:
-                            speak(f"Permission denied to close {query}.")
-                            process_found = False
-
-                # Only speak this if no process was found at all
-                if not process_found:
-                    speak(f"Could not find an application named {query}")
-
-                # Only speak this if no process was found at all
-                if not process_found:
-                    speak(f"Could not find an application named {query}")
+                            speak(f"Permission denied to close {query}. Try running as administrator.")
+                            continue
+                    
+                    if process_found:
+                        speak(f"Successfully closed {query}.")  # Speak success message
+                    else:
+                        speak(f"Could not find an application named {query}.")  # Speak failure message
             elif 'wikipedia' in request:
                 speak('Searching Wikipedia...')
                 query = request.replace("wikipedia", "").strip()
@@ -167,6 +169,15 @@ def main_process():
                 query = request.replace("search", "").replace("on google", "").replace("in google", "").strip()
                 webbrowser.open('https://www.google.com/search?q=' + query)
                 speak("Searching on Google")
+
+            elif detected_command == "weather":
+                for keyword in keywords_Dic["weather"]: 
+                    if keyword in request:
+                        speak("Fetching weather report")
+                        query = request.replace(keyword, "").strip()
+                        get_weather()
+
+                        
             else:
                 speak("I'm sorry, I don't understand that command.")
 
@@ -180,4 +191,4 @@ if __name__ == "__main__":
         background_thread = threading.Thread(target=run_main_process)
         background_thread.daemon = True
         background_thread.start()
-    app.run(debug=False)
+    app.run(debug=False)   

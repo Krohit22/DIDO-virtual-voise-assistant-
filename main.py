@@ -1,4 +1,6 @@
-from flask import Flask, Request, jsonify
+import subprocess
+import asyncio
+import edge_tts
 
 import pyttsx3
 import speech_recognition as sr
@@ -8,7 +10,6 @@ import pyautogui
 import wikipedia
 import webbrowser
 
-app = Flask(__name__)
 
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')     #getting details of current voice
@@ -95,6 +96,8 @@ def main_process():
              query = query.replace("in google", "")
              query = query.strip()
              webbrowser.open('https://www.google.com/search?q='+query) 
+        elif None == request:
+            speak("Sorry, I didn't understand that. Can you please repeat?")
 
 
 main_process()
