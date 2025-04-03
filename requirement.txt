@@ -22,3 +22,6 @@ wave
 TTS
 geocoder
 signal
+pycaw 
+comtypes
+screen-brightness-control
