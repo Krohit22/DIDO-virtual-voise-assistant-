@@ -1,0 +1,222 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: radial-gradient(circle, #1e1e1e, #000);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Assistant Container */
+.assistant-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Floating Shapes */
+.floating-shapes {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: -10%;
+    animation: rotate-shapes 10s infinite linear;
+    /* Animation for rotation */
+}
+
+@keyframes rotate-shapes {
+    from {
+        transform: rotate(0deg);
+        /* Start rotation from 0 degrees */
+    }
+
+    to {
+        transform: rotate(360deg);
+        /* End rotation at 360 degrees */
+    }
+}
+
+.shape {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff6f61;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.7);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 1s ease-in-out;
+}
+
+.shape-1 {
+    top: 50%;
+    left: 50%;
+}
+
+.shape-2 {
+    top: 50%;
+    left: 50%;
+}
+
+.shape-3 {
+    top: 50%;
+    left: 50%;
+}
+
+.shape-4 {
+    top: 50%;
+    left: 50%;
+}
+
+/* Floating Animation */
+.floating-shapes.active .shape-1 {
+    top: 0;
+    left: 50%;
+    opacity: 1;
+}
+
+.floating-shapes.active .shape-2 {
+    top: 50%;
+    left: 100%;
+    opacity: 1;
+}
+
+.floating-shapes.active .shape-3 {
+    top: 100%;
+    left: 50%;
+    opacity: 1;
+}
+
+.floating-shapes.active .shape-4 {
+    top: 50%;
+    left: 0;
+    opacity: 1;
+}
+
+/* Assistant Icon */
+.assistant-icon {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #ff6f61, #ffcc00);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(255, 111, 97, 0.7);
+}
+
+/* Inner Circle */
+.inner-circle {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Wave Animation */
+.wave {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 111, 97, 0.5);
+    border-radius: 50%;
+    animation: pulse 3s infinite ease-out;
+    opacity: 0;
+  }
+  
+  .wave-1 { animation-delay: 0s; }
+  .wave-2 { animation-delay: 1s; }
+  .wave-3 { animation-delay: 2s; }
+  
+  @keyframes pulse {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  
+  
+
+/* Microphone Button */
+.mic-button {
+    margin-top: 100px;
+    padding: 20px;
+    font-size: 28px;
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 20px rgba(0, 180, 219, 0.7);
+    position: relative;
+}
+
+.mic-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 180, 219, 1);
+}
+
+.mic-button:active {
+    transform: scale(0.9);
+}
+
+/* Microphone Icons */
+.mic-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mic-closed {
+    opacity: 1;
+}
+
+.mic-open {
+    opacity: 0;
+}
+
+.mic-button.active .mic-closed {
+    opacity: 0;
+}
+
+.mic-button.active .mic-open {
+    opacity: 1;
+}
+
+/* Response Box */
+.response-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    border-radius: 20px;
+    width: 0rem;
+    height: 0rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s, width 0.5s, height 0.5s;
+    box-shadow: 0 0 30px rgba(106, 17, 203, 0.7);
+}
+
+.response-box.visible {
+    width: 15rem;
+    height: 1.5rem;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.response-text {
+    margin: 0;
+}
