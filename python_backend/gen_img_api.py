@@ -17,7 +17,7 @@ app = FastAPI()
 
 # Load environment variables
 load_dotenv()
-os.environ['FLUX'] = os.getenv('FLUX', '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')
+os.environ['FLUX'] = os.getenv('FLUX', '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')
 
 # Serve static files
 app.mount("/generated_images", StaticFiles(directory="generated_images"), name="generated_images")
