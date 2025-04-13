@@ -6,7 +6,7 @@ from PIL import Image
 
 def main():
     load_dotenv()
-    os.environ['FLUX'] = os.getenv('FLUX', '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')
+    os.environ['FLUX'] = os.getenv('FLUX')
 
     output_dir = "generated_images"
     os.makedirs(output_dir, exist_ok=True)
