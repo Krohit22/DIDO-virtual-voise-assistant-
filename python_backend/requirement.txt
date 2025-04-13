@@ -30,3 +30,4 @@ streamlit
 PyPDF2
 chromadb
 faiss-cpu
+customtkinter==0.3
