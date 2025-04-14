@@ -1,0 +1,131 @@
+[33mcommit 27858bce8ef4759a4a2a38882effb468e7d3024e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 15:07:01 2025 +0530
+
+    image-generation-feature-completed
+
+[33mcommit 6246940b93c23b5efe0fb6be9bc4a99c9047905a[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 15:05:29 2025 +0530
+
+    image-generation-feature-completed
+
+[33mcommit 3c8d1bf987c32cd383f3039fba192465c4863a62[m[33m ([m[1;32mrgb[m[33m)[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 14:30:13 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit bf09aff876f9a60d1cd02015db92a756d9c6e2d9[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 05:27:47 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit c6de28c170c414848ea84030cf6b903f7c8d9dcf[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 05:27:10 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit 1c3a079ada3052b8e8b9c50250eee0e7d1640cd2[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 05:26:19 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit e41863dea9e93dcffa8a48f758a457783b52f02b[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 05:07:21 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit c5ed1cdf81e8e0cb98c65eac4782ef5ad0fd3c13[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 04:59:36 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit a71ab195f2bc56e11b94eedad051139e452c380c[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 04:53:28 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit 9b6355a76a17e46776185b603167b0692c5df018[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Apr 14 04:39:35 2025 +0530
+
+    image-generation-feature-complete
+
+[33mcommit 64d4edd2a0bf2275f5cd55d41d18f9ae616d0883[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Sat Apr 12 13:10:00 2025 +0530
+
+    pdf explainer is built and frontend is integrated
+
+[33mcommit 9af7ccf268d55e013de074dc91d18d6097727518[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Fri Apr 4 04:54:31 2025 +0530
+
+    add bluetooth,volume and brightness feacture
+
+[33mcommit 54d4ac3cdbcb796773d280ccfecb182263f6ab3c[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Thu Apr 3 21:23:45 2025 +0530
+
+    new features and audio fix
+
+[33mcommit 966a728b806665a53c8de9123afcc0ba0d300f86[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Thu Mar 20 23:50:34 2025 +0530
+
+    still dynamic voice command problem but added close and fix the win key problem
+
+[33mcommit c789e838c08263f9e364cbaa6035247d7774c053[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Tue Mar 18 22:33:15 2025 +0530
+
+    dynamic reponse issue 1.0
+
+[33mcommit 7d975e78099237d26560a0521ac93b2f12710ec4[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Mar 17 23:15:18 2025 +0530
+
+    dynamic voice command issue 2.1
+
+[33mcommit 375c1b2ccb18a364581e5e5c3e3e3f6605c370f0[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Mon Mar 17 23:08:41 2025 +0530
+
+    dynamic voice command issue 2
+
+[33mcommit c764db0747a31a4c80142bc050cd48479e0725f7[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Sun Mar 16 19:30:09 2025 +0530
+
+    dynamic voice command issue onngoing and accent problem
+
+[33mcommit e3988cf3bf789d87393cdcda98beb1bd456d26ee[m[33m ([m[1;31morigin/dynamic_command_issue[m[33m, [m[1;32mdynamic_command_issue[m[33m)[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Sun Mar 16 19:18:01 2025 +0530
+
+    dynamic voice command issue
+
+[33mcommit d4bff3cd3ea9086aa935696f0009824a1cc789c2[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Sun Mar 16 15:20:32 2025 +0530
+
+    dynamic command issue
+
+[33mcommit f59cb63baa7ba226e26e1065d89ef4e8dd16847f[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Sat Feb 15 17:16:24 2025 +0530
+
+    change made in requirement
+
+[33mcommit b7f4316591ac2fd26d3944e0d1f99d7fd7baf60d[m
+Author: Krohit22 <rajpurohitkrish45666@gmail.com>
+Date:   Fri Feb 7 21:27:19 2025 +0530
+
+    first commit
