@@ -17,7 +17,7 @@ app = FastAPI()
 
 # Load environment variables
 load_dotenv()
-os.environ['FLUX'] = os.getenv('FLUX')
+os.environ['FLUX'] = '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'
 
 # Serve static files
 app.mount("/generated_images", StaticFiles(directory="generated_images"), name="generated_images")
@@ -75,12 +75,10 @@ async def generate_poster(request: ImageRequest):
         error_msg = str(e)
         if 'exceeded your GPU quota' in error_msg:
             raise HTTPException(
-                status_code=status.HTTP_402_PAYMENT_REQUIRED, 
+                status_code=402, 
                 detail={
                     "error": "quota_exceeded",
-                    "message": "You need to purchase Dido Premium for further use",
-                    "upgrade_url": "https://yourdomain.com/premium",
-                    "remaining_quota": "0/60 seconds"  
+                    "message": "You need to purchase Dido Premium for further use", 
                 }
             )
         else:

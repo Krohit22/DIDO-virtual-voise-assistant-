@@ -6,7 +6,7 @@ from PIL import Image
 
 def main():
     load_dotenv()
-    os.environ['FLUX'] = os.getenv('FLUX')
+    os.environ['FLUX'] = os.getenv('FLUX','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')
 
     output_dir = "generated_images"
     os.makedirs(output_dir, exist_ok=True)
@@ -14,7 +14,7 @@ def main():
     client = Client("black-forest-labs/FLUX.1-schnell")
 
     result = client.predict(
-        prompt="babies swimming in the lake at sunset, realistic style",
+        prompt="babies swimming in the lake at night, realistic style",
         seed=42,
         randomize_seed=False,
         width=1024,
