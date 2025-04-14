@@ -16,10 +16,7 @@ const pythonScriptPath = path.join(process.resourcesPath, 'python-script.py')
 
 app.whenReady().then(() => {
 
-    pythonProcess = spawn(
-        'D:/Python-programs/pythonProject/My_AI_Assistent/Virtual-Assistant/python_backend/env/Scripts/python.exe', 
-        ['D:/Python-programs/pythonProject/My_AI_Assistent/Virtual-Assistant/python_backend/main_model.py']
-      );
+    pythonProcess = spawn('python', ['python_backend/main_model.py']);
       
       pythonProcess.stdout.on('data', (data) => {
         console.log(`Python Output: ${data}`);
@@ -58,7 +55,7 @@ app.whenReady().then(() => {
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            devTools: false
+            // devTools: false
         }
     })
     win.maximize()
@@ -83,10 +80,10 @@ app.whenReady().then(() => {
         const shortcut = `${input.control ? 'Ctrl+' : ''}${input.shift ? 'Shift+' : ''}${input.alt ? 'Alt+' : ''}${input.key.toUpperCase()}`;
 
         // Check if the shortcut is blocked
-        if (blockedShortcuts.includes(shortcut)) {
+        /* if (blockedShortcuts.includes(shortcut)) {
             event.preventDefault(); // Block the shortcut
             console.log(`${shortcut} is disabled within the app`);
-        }
+        }   */
     });
 
 
@@ -112,7 +109,7 @@ app.whenReady().then(() => {
 //listening to event from front-end
 ipcMain.on('dido', ()=>{
     if(!pythonProcess){
-        pythonProcess = spawn('D:/Python-programs/pythonProject/My_AI_Assistent/Virtual-Assistant/python_backend/env/Scripts/python.exe', ['D:/Python-programs/pythonProject/My_AI_Assistent/Virtual-Assistant/python_backend/main_model.py']);
+        pythonProcess = spawn('python', ['python_backend/main_model.py']);
     }
 })
 ipcMain.on('closeDido', ()=>{

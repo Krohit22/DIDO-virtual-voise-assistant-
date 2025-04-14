@@ -67,16 +67,17 @@ def command():
             print(f"Could not request results from Google Speech Recognition service; {e}")
             return None
         except Exception as e:
+            speak("Didn't get that")
             print("An error occurred:", e)
             return None
 
 def main_process():
     time.sleep(0.2)
-    get_battery_status()
+    #get_battery_status()
     speak("I am listening")
 
     while True:
-        # if listen_for_wake_word():
+        if listen_for_wake_word():
             keywords_Dic = get_keywords_Dic()
             request = command()
             detect_command(request)
