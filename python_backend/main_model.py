@@ -1,3 +1,4 @@
+import re
 import time
 from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
@@ -18,7 +19,6 @@ from keywords import get_keywords_Dic
 import signal
 from bluetooth_features import bluetooth_on_and_off, is_bluetooth_on
 from volume_up_and_down import change_volume , current_volume
-import re
 from Battery_status import get_battery_status, is_plugged_in
 
 
@@ -67,17 +67,16 @@ def command():
             print(f"Could not request results from Google Speech Recognition service; {e}")
             return None
         except Exception as e:
-            speak("Didn't get that")
             print("An error occurred:", e)
             return None
 
 def main_process():
-    time.sleep(0.2)
-    #get_battery_status()
+    time.sleep(0.5)
+    # get_battery_status()
     speak("I am listening")
 
     while True:
-        if listen_for_wake_word():
+        # if listen_for_wake_word():
             keywords_Dic = get_keywords_Dic()
             request = command()
             detect_command(request)
@@ -134,25 +133,70 @@ def main_process():
                         Speech_Output.add_message("Opening YouTube")
                         print(Speech_Output.messages)
             elif detected_command == "open_application":
-                for keyword in keywords_Dic["open_application"]: 
-                    if keyword in request:                        
-                        query = request.replace(keyword,"").strip()
-                        pyautogui.press('esc')
-                        pyautogui.press('super')
-                        pyautogui.typewrite(query)
-                        pyautogui.sleep(2)
-                        pyautogui.press('enter')
-                        speak(f"Opening {query}")
+    # Get all possible opening keywords
+                open_keywords = keywords_Dic["open_application"]
+                
+                # Find which keyword was actually used in the request
+                used_keyword = next((kw for kw in open_keywords if kw in request), None)
+                
+                if used_keyword:
+                    # Extract JUST the application name by removing ONLY the first occurrence of the keyword
+                    app_name = request.replace(used_keyword, "", 1).strip()
+                    
+                    if app_name:
+                        # Standardize app name (remove extra "launcher" if present)
+                        app_name = re.sub(r'\s*(launcher|app|application|program|software)\s*', '', app_name, flags=re.IGNORECASE)
+                        
+                        # Try direct execution first for known apps
+                        KNOWN_APPS = {
+                            'epic games': r'C:\Program Files (x86)\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe',
+                            'spotify': 'spotify.exe',
+                            'chrome': 'chrome.exe'
+                            # Add more apps here
+                        }
+                        
+                        # Fuzzy matching for known apps
+                        matched_app = None
+                        for known_app in KNOWN_APPS:
+                            if known_app in app_name.lower():
+                                matched_app = known_app
+                                break
+                        
+                        if matched_app:
+                            try:
+                                os.startfile(KNOWN_APPS[matched_app])
+                                speak(f"Opening {matched_app}")
+                                continue
+                            except:
+                                pass  # Fall back to search method
+                        
+                        # Search method
+                        try:
+                            pyautogui.press('esc')
+                            time.sleep(0.3)
+                            pyautogui.press('super')
+                            time.sleep(1)
+                            pyautogui.typewrite(app_name)
+                            time.sleep(2)
+                            pyautogui.press('enter')
+                            speak(f"Opening {app_name}")
+                        except Exception as e:
+                            speak("Sorry, I had trouble opening that application")
+                            print(f"Error: {e}")
             elif 'close this application' in request or 'quit current application' in request or 'close this app' in request or 'quit current app' in request or 'close that application' in request or 'quit active application' in request  or 'quit current app' in request or 'close that app' in request or 'quit active app' in request:
                 query = request.replace("close", "").replace("quit", "").strip()
                 print(f"Closing application: {query}")
                 pyautogui.hotkey('alt', 'f4')
                 speak(f"Closing {query}")
             elif detected_command == "close_tab":
+                close_tab = False
                 for keyword in keywords_Dic["close_tab"]: 
-                    if keyword in request:
-                        pyautogui.hotkey('ctrl', 'w')
+                    if keyword in request and not close_tab:
                         speak("Closing tab")
+                        time.sleep(1)
+                        pyautogui.hotkey('ctrl', 'w')
+                        close_tab = True
+
             elif detected_command == "close_application":
                 for keyword in keywords_Dic["close_application"]: 
                     if keyword in request:
@@ -265,6 +309,7 @@ def main_process():
                         query = request.replace(keyword,"").strip()
                         speak(f"Muting volume")
                         print(f"Muting volume")
+                        curr_volume = current_volume()
                         change_volume(0)
             elif detected_command == "unmute":
                 for keyword in keywords_Dic["unmute"]: 
@@ -272,7 +317,7 @@ def main_process():
                         query = request.replace(keyword,"").strip()
                         speak(f"unmuted volume")
                         print(f"unmuted volume")
-                        change_volume(40)
+                        change_volume(curr_volume)
             elif detected_command == "current_volume":
                 for keyword in keywords_Dic["current_volume"]: 
                     if keyword in request:
@@ -312,8 +357,7 @@ def main_process():
                 speak("I'm sorry, I don't understand that command.")
 
 def run_main_process():
-    with app.app_context():
-        main_process()
+    with app.app_context():        main_process()
 
 if __name__ == "__main__":
     # Check if this is the main process (not the reloader)
